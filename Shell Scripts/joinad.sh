@@ -51,6 +51,7 @@ EOL
 sudo chown root:root /etc/issue
 sudo chmod 644 /etc/issue
 grep ^gpgcheck /etc/yum.repos.d/*
+rm -f /etc/issue.d/cockpit.issue /etc/motd.d/cockpit
 sudo update-motd --disable
 cat >> /etc/motd <<EOL
 ---------------------------------------------WARNING--------------------------------------------------
