@@ -1,33 +1,31 @@
 #! /bin/bash
-sudo -i
 sudo yum -y update
-sudo hostnamectl set-hostname KPSLINUX02.vault.kps-lv.com
-sed -i 's/localhost /localhost KPSLINUX02 KPSLINUX02.vault.kps-lv.com /' /etc/hosts
 sudo yum -y install realmd sssd sssd-tools libnss-sss libpam-sss adcli samba-common-bin oddjob oddjob-mkhomedir packagekit krb5-user
+systemctl disable firewalld
+systemctl stop firewalld
+realm permit twotronz@vault.kps-lv.com
+sed -i 's/^.*use_fully_qualified_names.*$/use_fully_qualified_names False/g' /etc/sssd/sssd.conf
 sudo cp /etc/hosts /etc/host_original
-sudo cat >> /etc/hosts <<EOL
+cat >> /etc/hosts <<EOL
 10.1.200.5    vault.kps-lv.com
 EOL
 sudo cp /etc/sudoers /etc/sudoers_original
-sudo cat >> /etc/sudoers <<EOL
-twotronz@vault.kps-lv.com ALL=(ALL:ALL) ALL
-ansible                   ALL=(ALL:ALL) ALL
+cat >> /etc/sudoers <<EOL
+twotronz        ALL=(ALL:ALL) ALL
 EOL
 head -n 2 /etc/hosts > /tmp/tmp.txt && mv /tmp/tmp.txt /etc/hosts -f
 sed -i 's/^.*PasswordAuthentication.*$/PasswordAuthentication yes/g' /etc/ssh/sshd_config
 sudo systemctl restart sshd.service
-sudo cat >> /etc/security/limits.conf <<EOL
+cat >> /etc/security/limits.conf <<EOL
 * hard core 0
 EOL
 
-sudo cat >> /etc/ntp.conf <<EOL
+cat >> /etc/ntp.conf <<EOL
 restrict -4 default kod nomodify notrap nopeer noquery
 OPTIONS="-u ntp:ntp -p /var/run/ntpd.pid -g"
 EOL
 
-df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod a+t
-
-sudo cat >> /etc/sysctl.conf <<EOL
+cat >> /etc/sysctl.conf <<EOL
 fs.suid_dumpable=0
 kernel.randomize_va_space = 2
 net.ipv4.ip_forward = 0
@@ -54,7 +52,7 @@ sudo chown root:root /etc/issue
 sudo chmod 644 /etc/issue
 grep ^gpgcheck /etc/yum.repos.d/*
 sudo update-motd --disable
-sudo cat >> /etc/motd <<EOL
+cat >> /etc/motd <<EOL
 ---------------------------------------------WARNING--------------------------------------------------
 
 This system is restricted to authorized users for legitimate business purposes and is subject to audit. 
