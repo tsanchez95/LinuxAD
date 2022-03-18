@@ -50,18 +50,9 @@ net.ipv6.conf.default.accept_ra = 0
 net.ipv6.conf.all.accept_redirects = 0
 net.ipv6.conf.default.accept_redirects = 0
 EOL
-
 sudo chown root:root /etc/issue
 sudo chmod 644 /etc/issue
-
 grep ^gpgcheck /etc/yum.repos.d/*
-
-sudo cat >> /etc/rsyslog.conf <<EOL
-$FileCreateMode 0640
-*.*   @@10.238.42.36:514
-*.*   @@10.238.43.7:514
-EOL
-service rsyslog restart
 sudo update-motd --disable
 sudo cat >> /etc/motd <<EOL
 ---------------------------------------------WARNING--------------------------------------------------
