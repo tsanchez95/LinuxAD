@@ -63,5 +63,5 @@ and/or data contained therein or in transit to/from the system is illegal and wi
 By using this system as an authorized user you agree to follow the Acceptable Use Policy. 
 You acknowledge receipt of the above message when you login.
 
-------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
 EOL
