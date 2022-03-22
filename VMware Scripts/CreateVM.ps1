@@ -1,5 +1,5 @@
 # Login to VSphere
-#Connect-VIServer -Server
+#Connect-VIServer -Server mainframe.vault.kps-lv.com
 
 # Type the VM Name
 $Name = Read-Host 'Type VM Name'
@@ -8,15 +8,15 @@ $Name = Read-Host 'Type VM Name'
 $VMTemplate = "Ubunutu2004_011222"
 
 # Select the Host
-$VMHosts = Get-Content C:\Users\tsanchezadm\VMHosts.csv
+$VMHosts = Get-Content C:\Users\twotronz\Documents\VMHosts.csv
 $VMHost = $VMHosts | Out-GridView -Title "VM Hosts" -PassThru
 
 # Select the Datastore
-$Datastores = Get-Content C:\Users\tsanchezadm\Datastores.csv
+$Datastores = Get-Content C:\Users\twotronz\Documents\Datastores.csv
 $Datastore = $Datastores | Out-GridView -Title "Datastores" -PassThru
 
 # Select the Network Name
-$NetworkNames = Get-Content C:\Users\tsanchezadm\VNics.csv
+$NetworkNames = Get-Content C:\Users\twotronz\Documents\VNics.csv
 $NetworkName = $NetworkNames | Out-GridView -Title "VNICS" -PassThru
 
 # Select Network Adapter Type
