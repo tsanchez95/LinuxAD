@@ -5,15 +5,13 @@
 $Name = Read-Host 'Type VM Name'
 
 # Template
-#$VMTemplate = " "
+$VMTemplate = "KPSLINUXTemplate"
 
+# Resource Pool
 $ResourcePool = "Hosted Services"
 
-# Network Adapter Type
-$NetworkAdapterType = "Vmxnet3"
-
 # Create VM Script
-New-VM -Name $Name -ResourcePool $ResourcePool
+New-VM -Name $Name -ResourcePool $ResourcePool -Template $VMTemplate
 
 # Set Network Adapter
-Set-NetworkAdapter -Type $NetworkAdapterType -Connected:$true
+Get-VM $Name | Get-NetworkAdapter | Set-NetworkAdapter -Type Vmxnet3 -Confirm:$false
