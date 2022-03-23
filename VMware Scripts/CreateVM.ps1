@@ -7,20 +7,13 @@ $Name = Read-Host 'Type VM Name'
 # Template
 #$VMTemplate = " "
 
-# Hosted Services
 $ResourcePool = "Hosted Services"
 
-# Datastore
-$Datastore = "1 - HOST 1 - LOCAL"
-
-# Network Name
-$NetworkName = "90 - Hosting"
-
 # Network Adapter Type
-$NetworkAdapterType = "VMXNET 3"
+$NetworkAdapterType = "Vmxnet3"
 
 # Create VM Script
-New-VM -Name $Name -ResourcePool $ResourcePool -Datastore $Datastore -NetworkName $NetworkName
+New-VM -Name $Name -ResourcePool $ResourcePool
 
 # Set Network Adapter
-Set-NetAdapter -Type $NetworkAdapterType -Connected:$true
+Set-NetworkAdapter -Type $NetworkAdapterType -Connected:$true
